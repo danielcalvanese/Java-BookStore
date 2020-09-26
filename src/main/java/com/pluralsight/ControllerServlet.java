@@ -49,6 +49,9 @@ public class ControllerServlet extends HttpServlet {
 				case "/new":
 					showNewForm(request, response);
 					break;
+				case "/edit":
+					showEditForm(request, response);
+					break;
 				case "/insert":
 					insertBook(request, response);
 					break;
@@ -73,6 +76,16 @@ public class ControllerServlet extends HttpServlet {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/BookAdmin.jsp");
 		dispatcher.forward(request, response);
 	}
+	
+	private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int id = Integer.parseInt(request.getParameter("id"));
+		
+		Book book = bookDAO.getBook(id);
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/BookForm.jsp");
+		request.setAttribute("book",  book);
+		dispatcher.forward(request, response);
+	}
 
 	private void listBooks(HttpServletRequest request, HttpServletResponse response)
 			throws ClassNotFoundException, SQLException, ServletException, IOException {
@@ -87,7 +100,7 @@ public class ControllerServlet extends HttpServlet {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/BookForm.jsp");
 		dispatcher.forward(request, response);
 	}
-
+	
 	private void insertBook(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException, SQLException {
 		String title = request.getParameter("booktitle");
 		String author = request.getParameter("bookauthor");
