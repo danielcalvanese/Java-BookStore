@@ -91,6 +91,21 @@ public class BookDAO {
         return false;
     }
     
+    public void updateBook(Book book) {
+    	try {
+	    	PreparedStatement preparedStatement = jdbcConnection.prepareStatement("UPDATE book SET title = ?, author = ?, price = ? WHERE id = ?");
+			preparedStatement.setString(1, book.getTitle());
+			preparedStatement.setString(2, book.getAuthor());
+			preparedStatement.setFloat(3, book.getPrice());
+			preparedStatement.setInt(4,  book.getId());
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+    	}
+    	catch (Exception exception) {
+    		
+    	}
+    }
+    
     public void deleteBook(int id) {
     	try {
     		PreparedStatement preparedStatement = jdbcConnection.prepareStatement("DELETE FROM book WHERE id = ?");
